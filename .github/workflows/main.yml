@@ -41,7 +41,7 @@ jobs:
           java -version
 
       - name: Build
-          run: bash ./gradlew build
+        run: bash ./gradlew build
 
       - name: Run
         run: bash ./gradlew test --stacktrace
