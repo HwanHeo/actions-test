@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: set up local properties
-        run:
+        run: |
           echo "base.url=$BASE_URL" > local.properties
           echo "sendbird.id=$SENDBIRD_ID" >> local.properties
           echo "agora.id=$CAGORA_ID" >> local.properties
