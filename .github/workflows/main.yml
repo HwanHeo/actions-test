@@ -27,13 +27,13 @@ jobs:
           java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
           java-version: 1.8
       # https://github.com/actions/cache
-#      - name: Cache gradle
-#        uses: actions/cache@v2
-#        with:
-#          path: ~/.gradlec
-#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-#          restore-keys: |
-#            ${{ runner.os }}-gradle-
+      - name: Cache gradle
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradlec
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 #
 #      - name: Install sdk manger
 #        run: |
