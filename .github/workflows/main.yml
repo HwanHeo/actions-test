@@ -17,7 +17,7 @@ jobs:
   test:
     name: Unit test
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v2
       # https://github.com/actions/setup-java
@@ -30,18 +30,15 @@ jobs:
       - name: Cache gradle
         uses: actions/cache@v2
         with:
-          path: ~/.gradle/caches
+          path: ~/.gradlec
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-        
+
       - name: First log
         run: |
-          echo Hello, world!
+          echo ls -al
           java -version
-
-      - name: Build
-        run: bash ./gradlew build
 
       - name: Run
         run: bash ./gradlew test --stacktrace
