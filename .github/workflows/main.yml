@@ -24,11 +24,12 @@ jobs:
         env:
           BASE_URL: ${{ secrets.BASE_URL }}
           SENDBIRD_ID: ${{ secrets.SENDBIRD_ID }}
-          CAGORA_ID: ${{ secrets.CAGORA_ID }}
+          CAGORA_ID: ${{ secrets.AGORA_ID }}
         run: |
           echo "base.url=$BASE_URL" > local.properties
           echo "sendbird.id=$SENDBIRD_ID" >> local.properties
-          echo "agora.id=$CAGORA_ID" >> local.properties
+          echo "agora.id=$AGORA_ID" >> local.properties
+          echo $BASE_URL
 
       - name: print local properties
         run:
