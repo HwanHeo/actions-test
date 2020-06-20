@@ -14,7 +14,7 @@ on:
 
 env:
   ANDROID_COMPILE_SDK: "29"
-  ANDROID_BUILD_TOOLS: "29.0.1"
+  ANDROID_BUILD_TOOLS: "29.0.4"
   ANDROID_SDK_TOOLS:   "4333796"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -61,4 +61,4 @@ jobs:
 #          java -version
 
       - name: Run
-        run: ./gradlew test --stacktrace
+        run: sudo ./gradlew test --stacktrace
