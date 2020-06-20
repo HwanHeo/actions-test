@@ -12,15 +12,16 @@ on:
     branches:
       - feature/*
 
+env:
+  ANDROID_COMPILE_SDK: "29"
+  ANDROID_BUILD_TOOLS: "29.0.1"
+  ANDROID_SDK_TOOLS:   "4333796"
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   test:
     name: Unit test
     runs-on: ubuntu-latest
-#    env:
-#      ANDROID_COMPILE_SDK: "29"
-#      ANDROID_BUILD_TOOLS: "29.0.1"
-#      ANDROID_SDK_TOOLS:   "4333796"
 
     steps:
       - uses: actions/checkout@v2
