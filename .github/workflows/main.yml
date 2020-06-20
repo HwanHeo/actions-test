@@ -5,16 +5,19 @@ name: action test
 # Controls when the action will run. Triggers the workflow on push or pull request 
 # events but only for the master branch
 on:
+  push:
+    branches:
+      - feature/*
   pull_request:
-    branches: 
-      - 'test'
+    branches:
+      - feature/*
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   test:
     name: Unit test
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v2
       # https://github.com/actions/setup-java
@@ -23,11 +26,14 @@ jobs:
         with:
           java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
           java-version: 1.8
-        
-      - name: First log
-        run: |
-          echo Hello, world!
-          java -version   
-        
+      # https://github.com/actions/cache
+      - name: Cache gradle
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Run
-        run: bash ./gradlew test --stacktrace
+        run: sudo ./gradlew test --stacktrace
