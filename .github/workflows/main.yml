@@ -20,10 +20,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
       - name: set up local properties
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+          SENDBIRD_ID: ${{ secrets.SENDBIRD_ID }}
+          CAGORA_ID: ${{ secrets.CAGORA_ID }}
         run: |
-          echo $BASE_URL
           echo "base.url=$BASE_URL" > local.properties
           echo "sendbird.id=$SENDBIRD_ID" >> local.properties
           echo "agora.id=$CAGORA_ID" >> local.properties
