@@ -48,6 +48,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
             ${{ runner.os }}-
-
+      - name: Check
+        run: cd .gradle && ls -al
+          
       - name: Run
         run: sudo ./gradlew test --stacktrace
