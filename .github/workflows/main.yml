@@ -49,7 +49,7 @@ jobs:
             ${{ runner.os }}-gradle-
             ${{ runner.os }}-
       - name: Check
-        run: cd .gradle && ls -al
+        run: ls -al
           
       - name: Run
         run: sudo ./gradlew test --stacktrace
