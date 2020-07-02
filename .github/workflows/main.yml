@@ -53,3 +53,13 @@ jobs:
           
       - name: Run
         run: sudo ./gradlew test --stacktrace
+
+  build:
+    name: Build apk
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        -
+      - name: Set up local properties
+        run: ls -al
