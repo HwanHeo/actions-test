@@ -52,7 +52,7 @@ jobs:
         run: ls -al
           
       - name: Run
-        run: sudo ./gradlew test --stacktrace
+        run: ./gradlew test --stacktrace
 
   build:
     name: Build apk
