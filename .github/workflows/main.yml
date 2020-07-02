@@ -20,12 +20,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up local properties
+      - name: Set up exec env
         env:
           BASE_URL: ${{ secrets.BASE_URL }}
           SENDBIRD_ID: ${{ secrets.SENDBIRD_ID }}
           AGORA_ID: ${{ secrets.AGORA_ID }}
         run: |
+          chmod +x ./gradlew
           echo "base.url=$BASE_URL" > local.properties
           echo "sendbird.id=$SENDBIRD_ID" >> local.properties
           echo "agora.id=$AGORA_ID" >> local.properties
