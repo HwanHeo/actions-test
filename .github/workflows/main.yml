@@ -60,6 +60,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        -
+
       - name: Set up local properties
         run: ls -al
