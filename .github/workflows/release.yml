@@ -1,18 +1,11 @@
-# This is a basic workflow to help you get started with Actions
 
-name: Feature Test
+name: Test & Build
 
-# Controls when the action will run. Triggers the workflow on push or pull request 
-# events but only for the master branch
 on:
-  push:
-    branches:
-      - feature/*
   pull_request:
     branches:
-      - feature/*
+      - release
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   test:
     name: Unit test
@@ -20,12 +13,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up exec env
+      - name: Set up env
         env:
           BASE_URL: ${{ secrets.BASE_URL }}
           SENDBIRD_ID: ${{ secrets.SENDBIRD_ID }}
           AGORA_ID: ${{ secrets.AGORA_ID }}
         run: |
+          chmod +x ./gradlew
           echo "base.url=$BASE_URL" > local.properties
           echo "sendbird.id=$SENDBIRD_ID" >> local.properties
           echo "agora.id=$AGORA_ID" >> local.properties
@@ -50,11 +44,9 @@ jobs:
             ${{ runner.os }}-
       - name: Check
         run: ls -al
-          
+
       - name: Run
-        run: |
-          chmod +x gradlew
-          sudo ./gradlew test --stacktrace
+        run: sudo ./gradlew test --stacktrace
 
   build:
     name: Build apk
@@ -63,5 +55,35 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up local properties
-        run: ls -al
+      - name: Set up env
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+          SENDBIRD_ID: ${{ secrets.SENDBIRD_ID }}
+          AGORA_ID: ${{ secrets.AGORA_ID }}
+        run: |
+          echo "base.url=$BASE_URL" > local.properties
+          echo "sendbird.id=$SENDBIRD_ID" >> local.properties
+          echo "agora.id=$AGORA_ID" >> local.properties
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Cache gradle
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+            ${{ runner.os }}-
+
+      - name: Run
+        run: sudo ./gradlew assemble
+
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: app
+          path: app/build/outputs/apk/release
