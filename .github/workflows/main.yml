@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: action test
+name: Feature Test
 
 # Controls when the action will run. Triggers the workflow on push or pull request 
 # events but only for the master branch
@@ -54,7 +54,7 @@ jobs:
       - name: Run
         run: |
           chmod +x gradlew
-          bash ./gradlew test --stacktrace
+          sudo ./gradlew test --stacktrace
 
   build:
     name: Build apk
