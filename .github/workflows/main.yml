@@ -26,7 +26,6 @@ jobs:
           SENDBIRD_ID: ${{ secrets.SENDBIRD_ID }}
           AGORA_ID: ${{ secrets.AGORA_ID }}
         run: |
-          chmod +x ./gradlew
           echo "base.url=$BASE_URL" > local.properties
           echo "sendbird.id=$SENDBIRD_ID" >> local.properties
           echo "agora.id=$AGORA_ID" >> local.properties
@@ -53,7 +52,9 @@ jobs:
         run: ls -al
           
       - name: Run
-        run: bash ./gradlew test --stacktrace
+        run: |
+          chmod +x gradlew
+          bash ./gradlew test --stacktrace
 
   build:
     name: Build apk
