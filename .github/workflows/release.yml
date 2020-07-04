@@ -2,10 +2,6 @@
 name: Build & Upload
 
 on:
-  push:
-    branches:
-      - release
-
   pull_request:
     branches:
       - release
@@ -90,7 +86,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: app
-          path: app/build/outputs/apk/release
+          path: app/build/outputs/apk/release/app-release-unsigned.apk
 
 #      - name: Upload slack
 #        uses: actions/github-slack
