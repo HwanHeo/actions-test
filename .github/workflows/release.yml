@@ -87,9 +87,11 @@ jobs:
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
+        run: |
+          tar -zcvf app.tar.gz app/build/outputs/apk/release/app-release-unsigned.apk
         with:
           name: app
-          path: app/build/outputs/apk/release/app-release-unsigned.apk
+          path: app.tar.gz
 
 #      - name: Upload slack
 #        uses: actions/github-slack
