@@ -1,7 +1,11 @@
 
-name: Test & Build
+name: Build & Upload
 
 on:
+  push:
+    branches:
+      - release
+
   pull_request:
     branches:
       - release
@@ -19,7 +23,6 @@ jobs:
           SENDBIRD_ID: ${{ secrets.SENDBIRD_ID }}
           AGORA_ID: ${{ secrets.AGORA_ID }}
         run: |
-          chmod +x ./gradlew
           echo "base.url=$BASE_URL" > local.properties
           echo "sendbird.id=$SENDBIRD_ID" >> local.properties
           echo "agora.id=$AGORA_ID" >> local.properties
@@ -53,6 +56,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - needs: test
       - uses: actions/checkout@v2
 
       - name: Set up env
@@ -82,8 +86,13 @@ jobs:
       - name: Run
         run: sudo ./gradlew assemble
 
-      - name: Upload
+      - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: app
           path: app/build/outputs/apk/release
+
+      - name: Upload slack
+        uses: actions/github-slack
+        run: |
+
