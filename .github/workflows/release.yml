@@ -92,7 +92,7 @@ jobs:
           name: app
           path: app/build/outputs/apk/release
 
-      - name: Upload slack
-        uses: actions/github-slack
-        run: |
+#      - name: Upload slack
+#        uses: actions/github-slack
+#        run: |
 
