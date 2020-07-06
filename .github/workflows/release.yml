@@ -9,6 +9,17 @@ on:
     branches:
       - release
 
+env:
+  BASE_URL: ${{ secrets.BASE_URL }}
+  SENDBIRD_ID: ${{ secrets.SENDBIRD_ID }}
+  AGORA_ID: ${{ secrets.AGORA_ID }}
+
+defaults:
+  run: |
+    echo "base.url=$BASE_URL" > local.properties
+    echo "sendbird.id=$SENDBIRD_ID" >> local.properties
+    echo "agora.id=$AGORA_ID" >> local.properties
+
 jobs:
   test:
     name: Unit test
@@ -16,15 +27,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up env
-        env:
-          BASE_URL: ${{ secrets.BASE_URL }}
-          SENDBIRD_ID: ${{ secrets.SENDBIRD_ID }}
-          AGORA_ID: ${{ secrets.AGORA_ID }}
-        run: |
-          echo "base.url=$BASE_URL" > local.properties
-          echo "sendbird.id=$SENDBIRD_ID" >> local.properties
-          echo "agora.id=$AGORA_ID" >> local.properties
 
       - name: Print local properties
         run:
@@ -58,16 +60,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up env
-        env:
-          BASE_URL: ${{ secrets.BASE_URL }}
-          SENDBIRD_ID: ${{ secrets.SENDBIRD_ID }}
-          AGORA_ID: ${{ secrets.AGORA_ID }}
-        run: |
-          echo "base.url=$BASE_URL" > local.properties
-          echo "sendbird.id=$SENDBIRD_ID" >> local.properties
-          echo "agora.id=$AGORA_ID" >> local.properties
-
       - name: Set up JDK 1.8
         uses: actions/setup-java@v1
         with:
@@ -87,11 +79,9 @@ jobs:
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
-        run: |
-          tar -zcvf app.tar.gz app/build/outputs/apk/release/app-release-unsigned.apk
         with:
           name: app
-          path: app.tar.gz
+          path: app/build/outputs/apk/release/
 
 #      - name: Upload slack
 #        uses: actions/github-slack
