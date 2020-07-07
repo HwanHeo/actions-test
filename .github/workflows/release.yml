@@ -95,6 +95,15 @@ jobs:
           name: app
           path: app/build/outputs/apk/release/
 
+      - name: action-slack
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{job.status}}
+          fields: repo,message,commit,author
+          author_name: Mike
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 #      - name: Upload slack
 #        uses: actions/github-slack
 #        run: |
