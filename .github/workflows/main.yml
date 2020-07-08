@@ -62,7 +62,7 @@ jobs:
         run: ./gradlew test --stacktrace
 
       - name: Build
-          run: sudo ./gradlew assemble
+        run: sudo ./gradlew assemble
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
