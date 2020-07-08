@@ -53,7 +53,8 @@ jobs:
             ${{ runner.os }}-
       - name: Check
         run: ls -al
-          
+      # https://github.com/actions/virtual-environments/tree/master/images/linux
+      # 29.0.1 build version 지원하지 않는다
       - name: Run
         run: |
           chmod +x gradlew
