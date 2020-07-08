@@ -33,6 +33,9 @@ jobs:
           echo "sendbird.id=$SENDBIRD_ID" >> local.properties
           echo "agora.id=$AGORA_ID" >> local.properties
 
+      - name: Grant Permission to Execute
+        run: chmod +x gradlew
+
       - name: Print local properties
         run:
           cat local.properties
@@ -53,10 +56,26 @@ jobs:
             ${{ runner.os }}-
       - name: Check
         run: ls -al
-      # https://github.com/actions/virtual-environments/tree/master/images/linux
+      # https://github.com/actions/virtual-evironments/tree/master/images/linux
       # 29.0.1 build version 지원하지 않는다
       - name: Run
+        run: ./gradlew test --stacktrace
+
+      - name: Build
+          run: sudo ./gradlew assemble
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: app
+          path: app/build/outputs/apk/release/
+          run: ls app/build/outputs/apk/release/
+
+      - name: Send APK to Slack
         run: |
-          chmod +x gradlew
-          ls -al
-          ./gradlew test --stacktrace
+          curl 'https://slack.com/api/files.upload' \
+          -H 'Authorization: Bearer xoxa-xxxxxxxxx-xxxx' \
+          -F 'file=@app/build/outputs/apk/release/app.zip' \
+          -F "initial_comment=build apk."
+          -F channels=G011QBTF8DB
+
