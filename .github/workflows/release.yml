@@ -93,7 +93,7 @@ jobs:
       - name: Run
         run: ./gradlew assemble
 
-      - name: Upload artifact
+      - name: Upload APK to Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: app
@@ -104,18 +104,7 @@ jobs:
           curl -i https://slack.com/api/files.upload \
           -H "Authorization: Bearer ${{ secrets.SLACK_ACCESS_TOKEN }}" \
           -F file=@app/build/outputs/apk/release/app-release-unsigned.apk \
-          -F "initial_comment=build apk." \
+          -F "initial_comment=\`${GITHUB_REF#refs/heads/feature/}\` / \`${GITHUB_SHA}\`" \
+          -F "filetype=apk" \
+          -F "title=VMT" \
           -F channels=${{ secrets.SLACK_CHANNEL_ID }}
-#      - name: action-slack
-#        uses: 8398a7/action-slack@v3
-#        with:
-#          status: ${{job.status}}
-#          fields: repo,message,commit,author
-#          author_name: Mike
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-#      - name: Upload slack
-#        uses: actions/github-slack
-#        run: |
-
