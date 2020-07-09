@@ -23,11 +23,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up exec env
+
+      - name: Set up env
         env:
           BASE_URL: ${{ secrets.BASE_URL }}
           SENDBIRD_ID: ${{ secrets.SENDBIRD_ID }}
           AGORA_ID: ${{ secrets.AGORA_ID }}
+          SLACK_ACCESS_TOKEN: ${{ secrets.SLACK_ACCESS_TOKEN }}
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
+
+      - name: Set up local properties
         run: |
           echo "base.url=$BASE_URL" > local.properties
           echo "sendbird.id=$SENDBIRD_ID" >> local.properties
@@ -76,14 +81,9 @@ jobs:
           ls -al app/build/outputs/apk/release/
 
       - name: Send APK to Slack
-        env:
-          SLACK_ACCESS_TOKEN: ${{ secrets.SLACK_ACCESS_TOKEN }}
-          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
         run: |
-          echo $SLACK_ACCESS_TOKEN
-          echo $SLACK_CHANNEL_ID
           curl -i https://slack.com/api/files.upload \
-          -H "Authorization: Bearer ${{ secrets.SLACK_ACCESS_TOKEN }}" \
+          -H "Authorization: Bearer $SLACK_ACCESS_TOKEN" \
           -F file=@app/build/outputs/apk/release/app-release-unsigned.apk \
           -F "initial_comment=build apk." \
-          -F channels=${{ secrets.SLACK_CHANNEL_ID }}
+          -F channels=$SLACK_CHANNEL_ID
