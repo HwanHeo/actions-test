@@ -80,8 +80,8 @@ jobs:
           SLACK_ACCESS_TOKEN: ${{ secrets.SLACK_ACCESS_TOKEN }}
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
         run: |
-          curl -i 'https://slack.com/api/files.upload' \
-          -H 'Authorization: Bearer $SLACK_ACCESS_TOKEN' \
+          curl -i https://slack.com/api/files.upload \
+          -H "Authorization: Bearer $SLACK_ACCESS_TOKEN" \
           -F file=@app/build/outputs/apk/release/app-release-unsigned.apk \
-          -F 'initial_comment=build apk.'
+          -F "initial_comment=build apk."
           -F channels=$SLACK_CHANNEL_ID
