@@ -69,6 +69,8 @@ jobs:
         with:
           name: app
           path: app/build/outputs/apk/release/
+
+      - name: Check
         run: ls app/build/outputs/apk/release/
 
       - name: Send APK to Slack
