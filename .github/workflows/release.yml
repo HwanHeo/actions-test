@@ -93,7 +93,7 @@ jobs:
       - name: Run
         run: ./gradlew assemble
 
-      - name: Upload artifact
+      - name: Upload APK to Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: app
