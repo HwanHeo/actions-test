@@ -100,16 +100,13 @@ jobs:
           path: app/build/outputs/apk/release/
 
       - name: Send APK to Slack
-        env:
-          SLACK_ACCESS_TOKEN: ${{ secrets.SLACK_ACCESS_TOKEN }}
-          SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
         run: |
           curl -i https://slack.com/api/files.upload \
-          -H "Authorization: Bearer ${SLACK_ACCESS_TOKEN}" \
+          -H "Authorization: Bearer ${{ secrets.SLACK_ACCESS_TOKEN }}" \
           -F file=@app/build/outputs/apk/release/app-release-unsigned.apk \
           -F "initial_comment=initial_comment" \
           -F "content=content" \
           -F "filename=filename" \
           -F "filetype=apk" \
           -F "title=title" \
-          -F channels=${SLACK_CHANNEL_ID}
+          -F channels=${{ secrets.SLACK_CHANNEL_ID }}
