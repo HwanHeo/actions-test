@@ -92,7 +92,7 @@ jobs:
           echo "base.url=$BASE_URL" > local.properties
           echo "sendbird.id=$SENDBIRD_ID" >> local.properties
           echo "agora.id=$AGORA_ID" >> local.properties
-          echo $KEYSTORE | base64 --decode > keystore
+          echo $KEYSTORE | base64 --decode --ignore-garbage > keystore
           echo "file=../keystore" > keystore.properties
           echo "password=$KEYSTORE_PASSWORD" >> keystore.properties
           echo "alias=$KEYSTORE_ALIAS" >> keystore.properties
