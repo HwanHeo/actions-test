@@ -7,6 +7,26 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
+    signingConfigs {
+        release {
+            def filePath = rootProject.file('keystore.properties')
+            def keystoreProperties = file(filePath)
+            if (!keystoreProperties.exists()) {
+                throw new GradleException("file not found")
+            }
+
+            Properties properties = new Properties()
+            properties.load(new FileInputStream(filePath))
+            def FILE = properties.getProperty("file")
+            def PASSWORD = properties.getProperty("password")
+            def ALIAS = properties.getProperty("alias")
+            def ALIAS_PASSWORD = properties.getProperty("alias.password")
+            storeFile file(FILE)
+            storePassword PASSWORD
+            keyAlias ALIAS
+            keyPassword ALIAS_PASSWORD
+        }
+    }
     defaultConfig {
         applicationId "com.android.viewmodeltest"
         minSdkVersion 21
@@ -19,6 +39,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
