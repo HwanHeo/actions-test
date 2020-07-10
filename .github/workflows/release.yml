@@ -98,7 +98,6 @@ jobs:
           echo "alias=$KEYSTORE_ALIAS" >> keystore.properties
           echo "alias.password=$KEYSTORE_ALIAS_PASSWORD" >> keystore.properties
           ls -al
-          cat keystore
 
       - name: Grant Permission to Execute
         run: chmod +x gradlew
