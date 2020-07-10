@@ -91,7 +91,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Run
-        run: ./gradlew assemble
+        run: ./gradlew assembleRelease
 
       - name: Upload APK to Artifacts
         uses: actions/upload-artifact@v2
