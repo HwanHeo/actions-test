@@ -13,7 +13,7 @@ jobs:
   test:
     name: Unit Test
     runs-on: ubuntu-18.04
-    timeout-minutes: 1
+    timeout-minutes: 10
     strategy:
       matrix:
         java: [ 1.8 ]
@@ -92,11 +92,12 @@ jobs:
           echo "base.url=$BASE_URL" > local.properties
           echo "sendbird.id=$SENDBIRD_ID" >> local.properties
           echo "agora.id=$AGORA_ID" >> local.properties
-          echo $KEYSTORE | base64 --decode --ignore-garbage > keystore
+          echo $KEYSTORE | base64 --decode > keystore
           echo "file=../keystore" > keystore.properties
           echo "password=$KEYSTORE_PASSWORD" >> keystore.properties
           echo "alias=$KEYSTORE_ALIAS" >> keystore.properties
           echo "alias.password=$KEYSTORE_ALIAS_PASSWORD" >> keystore.properties
+          ls -al
 
       - name: Grant Permission to Execute
         run: chmod +x gradlew
