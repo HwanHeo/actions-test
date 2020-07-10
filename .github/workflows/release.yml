@@ -84,7 +84,7 @@ jobs:
           BASE_URL: ${{ secrets.BASE_URL }}
           SENDBIRD_ID: ${{ secrets.SENDBIRD_ID }}
           AGORA_ID: ${{ secrets.AGORA_ID }}
-          KEYSTORE: ${{ secrets.KESTORE }}
+          KEYSTORE: ${{ secrets.KEYSTORE }}
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
           KEYSTORE_ALIAS_PASSWORD: ${{ secrets.KEYSTORE_ALIAS_PASSWORD }}
@@ -98,6 +98,7 @@ jobs:
           echo "alias=$KEYSTORE_ALIAS" >> keystore.properties
           echo "alias.password=$KEYSTORE_ALIAS_PASSWORD" >> keystore.properties
           ls -al
+          cat keystore
 
       - name: Grant Permission to Execute
         run: chmod +x gradlew
