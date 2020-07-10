@@ -7,26 +7,6 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
-    signingConfigs {
-        release {
-            def filePath = rootProject.file('keystore.properties')
-            def keystoreProperties = file(filePath)
-            if (!keystoreProperties.exists()) {
-                throw new GradleException("file not found")
-            }
-
-            Properties properties = new Properties()
-            properties.load(new FileInputStream(filePath))
-            def FILE = properties.getProperty("file")
-            def PASSWORD = properties.getProperty("password")
-            def ALIAS = properties.getProperty("alias")
-            def ALIAS_PASSWORD = properties.getProperty("alias.password")
-            storeFile file(FILE)
-            storePassword PASSWORD
-            keyAlias ALIAS
-            keyPassword ALIAS_PASSWORD
-        }
-    }
     defaultConfig {
         applicationId "com.android.viewmodeltest"
         minSdkVersion 21
@@ -34,6 +14,24 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        release {
+            def keyProps = rootProject.file('keystore.properties')
+            def keyFile = file(keyProps)
+            if (keyFile.exists()) {
+                Properties props = new Properties()
+                props.load(new FileInputStream(keyProps))
+                def PATH = props.getProperty("file")
+                def PASSWORD = props.getProperty("password")
+                def ALIAS = props.getProperty("alias")
+                def ALIAS_PASSWORD = props.getProperty("alias.password")
+                storeFile file(PATH)
+                storePassword PASSWORD
+                keyAlias ALIAS
+                keyPassword ALIAS_PASSWORD
+            }
+        }
     }
     buildTypes {
         release {
