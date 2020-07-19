@@ -13,6 +13,7 @@ jobs:
   test:
     name: Unit Test
     runs-on: ubuntu-18.04
+    timeout-minutes: 10
     strategy:
       matrix:
         java: [ 1.8 ]
@@ -56,6 +57,7 @@ jobs:
     name: Build APK
     needs: test
     runs-on: ubuntu-18.04
+    timeout-minutes: 10
     strategy:
       matrix:
         java: [ 1.8 ]
@@ -82,10 +84,20 @@ jobs:
           BASE_URL: ${{ secrets.BASE_URL }}
           SENDBIRD_ID: ${{ secrets.SENDBIRD_ID }}
           AGORA_ID: ${{ secrets.AGORA_ID }}
+          KEYSTORE: ${{ secrets.KEYSTORE }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+          KEYSTORE_ALIAS_PASSWORD: ${{ secrets.KEYSTORE_ALIAS_PASSWORD }}
         run: |
           echo "base.url=$BASE_URL" > local.properties
           echo "sendbird.id=$SENDBIRD_ID" >> local.properties
           echo "agora.id=$AGORA_ID" >> local.properties
+          echo $KEYSTORE | base64 --decode --ignore-garbage > keystore
+          echo "file=../keystore" > keystore.properties
+          echo "password=$KEYSTORE_PASSWORD" >> keystore.properties
+          echo "alias=$KEYSTORE_ALIAS" >> keystore.properties
+          echo "alias.password=$KEYSTORE_ALIAS_PASSWORD" >> keystore.properties
+          ls -al
 
       - name: Grant Permission to Execute
         run: chmod +x gradlew
@@ -103,7 +115,7 @@ jobs:
         run: |
           curl -i https://slack.com/api/files.upload \
           -H "Authorization: Bearer ${{ secrets.SLACK_ACCESS_TOKEN }}" \
-          -F file=@app/build/outputs/apk/release/app-release-unsigned.apk \
+          -F file=@app/build/outputs/apk/release/app-release.apk \
           -F "initial_comment=\`${GITHUB_REF#refs/heads/feature/}\` / \`${GITHUB_SHA}\`" \
           -F "filetype=apk" \
           -F "title=VMT" \

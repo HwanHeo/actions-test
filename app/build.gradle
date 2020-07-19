@@ -15,10 +15,31 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+    signingConfigs {
+        release {
+            def keyProps = rootProject.file('keystore.properties')
+            def keyFile = file(keyProps)
+            if (keyFile.exists()) {
+                Properties props = new Properties()
+                props.load(new FileInputStream(keyProps))
+                def PATH = props.getProperty("file")
+                def PASSWORD = props.getProperty("password")
+                def ALIAS = props.getProperty("alias")
+                def ALIAS_PASSWORD = props.getProperty("alias.password")
+                storeFile file(PATH)
+                storePassword PASSWORD
+                keyAlias ALIAS
+                keyPassword ALIAS_PASSWORD
+                v1SigningEnabled true
+                v2SigningEnabled true
+            }
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
