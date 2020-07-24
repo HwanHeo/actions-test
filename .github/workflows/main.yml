@@ -44,7 +44,7 @@ jobs:
 
       - run: exit 1
 
-      - uses: /composite@v1
+      - uses: tester/composite@v1
         if: always()
 #      - name: Set up env
 #        env:
