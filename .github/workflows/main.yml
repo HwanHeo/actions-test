@@ -42,10 +42,11 @@ jobs:
             ${{ runner.os }}-gradle-
             ${{ runner.os }}-
 
-      - name: Set up env
-        - run: exit 1
-        - uses: composite@v1
-          if: always()
+      - run: exit 1
+
+      - uses: composite@v1
+        if: always()
+#      - name: Set up env
 #        env:
 #          BASE_URL: ${{ secrets.BASE_URL }}
 #          SENDBIRD_ID: ${{ secrets.SENDBIRD_ID }}
