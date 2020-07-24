@@ -43,14 +43,17 @@ jobs:
             ${{ runner.os }}-
 
       - name: Set up env
-        env:
-          BASE_URL: ${{ secrets.BASE_URL }}
-          SENDBIRD_ID: ${{ secrets.SENDBIRD_ID }}
-          AGORA_ID: ${{ secrets.AGORA_ID }}
-        run: |
-          echo "base.url=$BASE_URL" > local.properties
-          echo "sendbird.id=$SENDBIRD_ID" >> local.properties
-          echo "agora.id=$AGORA_ID" >> local.properties
+        - run: exit 1
+        - uses: composite@v1
+          if: always()
+#        env:
+#          BASE_URL: ${{ secrets.BASE_URL }}
+#          SENDBIRD_ID: ${{ secrets.SENDBIRD_ID }}
+#          AGORA_ID: ${{ secrets.AGORA_ID }}
+#        run: |
+#          echo "base.url=$BASE_URL" > local.properties
+#          echo "sendbird.id=$SENDBIRD_ID" >> local.properties
+#          echo "agora.id=$AGORA_ID" >> local.properties
 
       - name: Grant Permission to Execute
         run: chmod +x gradlew
