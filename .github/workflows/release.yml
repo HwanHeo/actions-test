@@ -116,7 +116,7 @@ jobs:
           curl -i https://slack.com/api/files.upload \
           -H "Authorization: Bearer ${{ secrets.SLACK_ACCESS_TOKEN }}" \
           -F file=@app/build/outputs/apk/release/app-release.apk \
-          -F "initial_comment=\`${GTHUB_REF#refs/heads/feature/}\`\n\`${GITHUB_SHA}\`" \
+          -F "initial_comment=\`${GTHUB_REF#refs/heads/release/}\`/\n\`${GITHUB_SHA}\`" \
           -F "filetype=apk" \
           -F "title=VMT" \
           -F channels=${{ secrets.SLACK_CHANNEL_ID }}
