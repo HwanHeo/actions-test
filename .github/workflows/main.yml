@@ -42,11 +42,6 @@ jobs:
             ${{ runner.os }}-gradle-
             ${{ runner.os }}-
 
-#      - run: exit 1
-# https://github.com/actions/runner/issues/438
-# https://github.com/actions/runner/blob/main/docs/adrs/0549-composite-run-steps.md
-#      - uses: tester/composite@v1
-#        if: always()
       - name: Set up env
         env:
           BASE_URL: ${{ secrets.BASE_URL }}
